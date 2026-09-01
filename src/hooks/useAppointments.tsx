@@ -62,8 +62,12 @@ export function AppointmentProvider({
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    setAppointments(getStoredAppointments());
-    setHydrated(true);
+    const animationFrame = window.requestAnimationFrame(() => {
+      setAppointments(getStoredAppointments());
+      setHydrated(true);
+    });
+
+    return () => window.cancelAnimationFrame(animationFrame);
   }, []);
 
   useEffect(() => {
